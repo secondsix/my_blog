@@ -51,16 +51,12 @@ public class UserController {
     @PostMapping("/save")
     public Result save(@Validated @RequestBody User user){
 
-        System.out.println("user.getPassword() = " + user.getPassword());
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",user.getUsername())
-                .eq("avatar",user.getAvatar())
-                .eq("password",SecureUtil.md5(user.getPassword()))
-                .eq("status","0")
-                .eq("created", LocalDateTime.now());
-
-
-        boolean save = userService.save(user);
+        user.setUsername(user.getUsername());
+        user.setAvatar(user.getAvatar());
+        user.setPassword(SecureUtil.md5(user.getPassword()));
+        user.setStatus(0);
+        user.setCreated(LocalDateTime.now());
+        boolean save = userService.saveOrUpdate(user);
         if (save){
             return Result.success(user);
         }else {

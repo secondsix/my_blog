@@ -8,3 +8,11 @@ spring:
     password: root
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**mapper.xml
+
+hjs:
+  jwt:
+    # 部署上线务必修改此配置，以保证token的安全性
+    # 自己数据库里的加密后的密码
+    secret: 202cb962ac59075b964b07152d234b70
+    expire: 172800
+    header: token

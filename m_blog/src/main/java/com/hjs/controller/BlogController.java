@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  * @since 2022-04-28
  */
 @RestController
-@RequestMapping
+@RequestMapping("blog")
 public class BlogController {
     @Autowired
     BlogService blogService;
@@ -40,7 +40,7 @@ public class BlogController {
     }
 
     //@PathVariable 动态路由
-    @GetMapping("/blog/{id}")
+    @GetMapping("/{id}")
     public Result detail(@PathVariable Long id){
         Blog blog = blogService.getById(id);
         //判断是否为空 为空则断言异常
@@ -50,7 +50,7 @@ public class BlogController {
 
     //添加删除 没有id则添加 有id则编辑
     @RequiresAuthentication //需要认证之后才能操作
-    @PostMapping("/blog/edit")
+    @PostMapping("/edit")
     public Result edit(@Validated @RequestBody Blog blog){
         //一个空对象用于赋值
         Blog temp = null;
