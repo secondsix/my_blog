@@ -3,11 +3,29 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://116.62.14.32:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  redis:
+    database: 1
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: -1   # 最大连接数据库连接数,设 -1 为没有限制
+        max-idle: 0     # 最大等待连接中的数量,设 0 为没有限制
+        max-wait: -1ms  # 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        min-idle: 0     # 最小等待连接中的数量,设 0 为没有限制
+      shutdown-timeout: 100ms
+    password: ''
+    port: 6379
+# fastDFS配置
+  servlet:
+    multipart:
+      max-file-size: 10MB  # 单个文件大小
+      max-request-size: 10MB  # 设置总上传的数据大小
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**mapper.xml
+  mapper-locations: classpath*:/mapper/xml/**Mapper.xml
+
 
 hjs:
   jwt:
@@ -16,3 +34,4 @@ hjs:
     secret: 202cb962ac59075b964b07152d234b70
     expire: 172800
     header: token
+

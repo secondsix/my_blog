@@ -1,9 +1,10 @@
 <template>
-<!--  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>-->
+<!--  <div>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>-->
   <div id="app">
     <router-view></router-view>
-    <router-link to="/Demo">Demo页面</router-link>
   </div>
 </template>
 

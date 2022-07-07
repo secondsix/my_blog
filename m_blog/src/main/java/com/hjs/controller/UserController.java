@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -63,5 +64,19 @@ public class UserController {
             return Result.fail("错误!");
         }
 
+    }
+
+    @RequiresAuthentication
+    @GetMapping("/test")
+    public Result Test(){
+        User all = userService.findAll();
+        return Result.success(all);
+    }
+
+    @RequiresAuthentication
+    @GetMapping("/getUser")
+    public Result<List<User>> getUser(){
+        List<User> list = userService.list();
+        return Result.success(list);
     }
 }

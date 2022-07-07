@@ -60,6 +60,6 @@ public class AccountController {
     public Result logout(){
         //退出登陆
         SecurityUtils.getSubject().logout();
-        return null;
+        return Result.success("注销成功!");
     }
 }
