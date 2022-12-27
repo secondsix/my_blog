@@ -14,6 +14,8 @@ var s2 = s1.indexOf('/')
 s = s.substr(0, 8 + s2)
 // 取连接前缀相当于 http://localhost:8083/
 var a = 'http://localhost:8083/'
+// 用于部署在服务器上
+// var a = 'http://116.62.14.32:8083/'
 
 // 配置默认前缀
 axios.defaults.baseURL = a

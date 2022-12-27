@@ -89,7 +89,7 @@ export default {
         var result = md.render(blog.content);
         _this.blog.content = result;
         //查看是否是登陆人 是则可以编辑和删除
-        _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id);
+        // _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id);
       })
     }
   }

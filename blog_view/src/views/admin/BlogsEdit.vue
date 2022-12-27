@@ -156,17 +156,18 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="是否公开" prop="status">
-              <el-tooltip :content="'Swich value:' + ruleForm.status">
+<!--              <el-tooltip :content="'Swich value:' + ruleForm.status">-->
+<!--              <el-tooltip>-->
                 <el-switch v-model="ruleForm.status" :active-value="1" :inactive-value="0"></el-switch>
-              </el-tooltip>
+<!--              </el-tooltip>-->
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" style="margin: 0 auto">立即创建</el-button>
           <!--          <el-button type="primary" @click="submitForm">立即创建</el-button>-->
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+<!--          <el-button @click="resetForm('ruleForm')">重置</el-button>-->
         </el-form-item>
       </el-form>
     </div>

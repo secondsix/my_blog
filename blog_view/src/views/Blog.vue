@@ -88,7 +88,7 @@ export default {
 
         _this.blog.content = blog.content
         if (_this.$store.getters.getUser) {
-          _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id)
+          // _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id)
         } else {
           _this.ownBlog = false
         }

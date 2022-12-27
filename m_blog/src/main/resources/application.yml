@@ -3,11 +3,13 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://116.62.14.32:3389/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     url: jdbc:mysql://localhost:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
+#    password: Hjs520@...qq
     password: root
   redis:
-    database: 1
+    database: 3
     host: 127.0.0.1
     lettuce:
       pool:
@@ -24,7 +26,7 @@ spring:
       max-file-size: 10MB  # 单个文件大小
       max-request-size: 10MB  # 设置总上传的数据大小
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/xml/**Mapper.xml
+  mapper-locations: classpath*:com/hjs/mapper/xml/**Mapper.xml
 
 
 hjs:

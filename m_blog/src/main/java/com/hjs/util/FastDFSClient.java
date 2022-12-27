@@ -1,13 +1,15 @@
 package com.hjs.util;
 
-import cn.hutool.core.io.resource.ClassPathResource;
 import com.hjs.entity.FastDFSFile;
+import org.apache.commons.io.FileUtils;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,8 +21,12 @@ public class FastDFSClient {
      */
     static {
         try {
-            String filePath = new ClassPathResource("fdfs_client.conf").getFile().getAbsolutePath();
-            ClientGlobal.init(filePath);
+//            String filePath = new ClassPathResource("fdfs_client.conf").getFile().getAbsolutePath();
+            ClassPathResource classPathResource = new ClassPathResource("/fdfs_client.conf");
+            InputStream inputStream = classPathResource.getInputStream();
+            File file = File.createTempFile("fdfs_client", ".conf");
+            FileUtils.copyInputStreamToFile(inputStream,file);
+            ClientGlobal.init(file.getAbsolutePath());
         } catch (Exception e) {
             logger.error("FastDFS Client Init Fail!",e);
         }

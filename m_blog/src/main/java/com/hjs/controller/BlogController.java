@@ -424,19 +424,28 @@ public class BlogController {
         String description = blog.getDescription();
         String content = blog.getContent();
 
-        List<String> stringLists = stringList(description);
-        for (String i: stringLists) {
-            FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+        if (description.contains("/group1/M00/00/00/")){
+            List<String> stringLists = stringList(description);
+            for (String i: stringLists) {
+                FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+            }
         }
 
-        List<String> stringList = stringList(content);
-        for (String i: stringList) {
-            FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+        if (content.contains("/group1/M00/00/00/")){
+            List<String> stringList = stringList(content);
+            for (String i: stringList) {
+                FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+            }
         }
 
         return Result.success("success");
     }
 
+    /**
+     * 解析图片地址工具类
+     * @param bb
+     * @return
+     */
     public List<String> stringList(String bb){
         char[] chars = bb.toCharArray();
         StringBuffer stringBuffer=new StringBuffer();
@@ -460,5 +469,12 @@ public class BlogController {
             linkedList.add(substr);
         }
         return linkedList;
+    }
+
+
+    @PostMapping("/search")
+    public Result<?> search(String queryString){
+        List<Blog> list = blogService.list(new QueryWrapper<Blog>().like("content", queryString).eq("status", 1).orderByDesc("created"));
+        return Result.success(list);
     }
 }

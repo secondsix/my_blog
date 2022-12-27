@@ -31,6 +31,9 @@ public class RedisKeyConfig {
     //友链页面博客信息key
     public static final String FRIEDN_BLOG_CACHE = "friendBlogCache";
 
+    /**
+     * 档案信息缓存
+     */
     //博客归档key
     public static final String ARCHIVE_INFO_CACHE = "archiveInfoCache";
 

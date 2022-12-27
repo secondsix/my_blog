@@ -17,5 +17,25 @@ module.exports = {
             })
         ]
     },
-    runtimeCompiler: true
+    runtimeCompiler: true,
+    devServer:{
+        host: 'localhost',
+        port:8081,  // 端口号的配置
+        proxy: {
+            '/api': {
+                // 后台地址请求，加 http / https 请求本地
+                target: 'http://116.62.14.32:8083',
+                // 是否跨域
+                changeOrigin: true,
+                ws: false,
+                secure: false,
+                // 重定向
+                pathRewrite: {
+                    // 将请求地址中前面的替换为后面的
+                    '^/api': '/'
+                }
+            }
+        }
+
+    }
 }

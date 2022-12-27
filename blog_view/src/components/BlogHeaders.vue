@@ -79,7 +79,9 @@ export default {
       mobileHide: false,
       types: {},
       queryString: '',
-      tags: {}
+      tags: {},
+      timer: null,
+      queryResult: []
     }
   },
   methods: {
@@ -104,8 +106,33 @@ export default {
     tagRoute(name){
       this.$router.push(`/tag/${name}`);
     },
-    debounceQuery(){
+    debounceQuery(queryString,callback){
+      this.timer && clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.querySearchAsync(queryString,callback),1000)
+    },
+    querySearchAsync(queryString,callback){
+      if (queryString == null
+          || queryString.trim() === ''
+          || queryString.indexOf('%') !== -1
+          || queryString.indexOf('_') !== -1
+          || queryString.indexOf('[') !== -1
+          || queryString.indexOf('#') !== -1
+          || queryString.indexOf('*') !== -1
+          || queryString.trim().length > 20) {
+        return
+      }
 
+      const _this = this;
+      let fd = new FormData;
+      fd.append('queryString',queryString);
+      this.axios.post('/blog/search',fd).then(res => {
+        _this.queryResult = res.data.data;
+        if (_this.queryResult.length === 0){
+          _this.queryResult.push({title: '无相关搜索结果'});
+        }
+
+        callback(_this.queryResult);
+      });
     },
     handleSelect(item){
       if (item.id){
