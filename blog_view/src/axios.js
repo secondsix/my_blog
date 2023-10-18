@@ -48,9 +48,9 @@ axios.interceptors.response.use(response => {
 
   if (error.response.status === 401) {
     // 清空token userInfo
-    store.commit('REMOVE_INFO')
+    store.commit('REMOVE_INFO');
     // 跳转登陆页面
-    router.push('/login')
+    router.push('/login');
   }
 
   Element.Message.error(error.message)

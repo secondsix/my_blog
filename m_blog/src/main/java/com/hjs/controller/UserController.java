@@ -30,8 +30,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * RequiresAuthentication
+     * 登陆拦截注解
+     *
+     * @return {@link Result}<{@link User}>
+     */
     @GetMapping("/index")
-    @RequiresAuthentication //登陆拦截注解
+    @RequiresAuthentication
     public Result<User> getById(){
         User byId = userService.getById(1);
         return Result.success(200,"操作成功",byId);
@@ -39,14 +45,14 @@ public class UserController {
 
     /**
      *
-     *@RequestBody主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；
+     *RequestBody主要用来接收前端传递给后端的json字符串中的数据的(请求体中的数据的)；
      * GET方式无请求体，所以使用@RequestBody接收数据时，
      * 前端不能使用GET方式提交数据，
      * 而是用POST方式进行提交。在后端的同一个接收方法里，
-     * @RequestBody与@RequestParam()可以同时使用，@RequestBody最多只能有一个，
+     * RequestBody与@RequestParam()可以同时使用，@RequestBody最多只能有一个，
      * 而@RequestParam()可以有多个。
      *
-     * @Validated注解用于检查user中填写的规则  如果不满足抛出异常
+     * Validated注解用于检查user中填写的规则  如果不满足抛出异常
      * 可在GlobalExceptionHandler中捕获此异常 进行自定义 返回数据信息
      */
     @PostMapping("/save")
@@ -68,7 +74,7 @@ public class UserController {
 
     @RequiresAuthentication
     @GetMapping("/test")
-    public Result Test(){
+    public Result test(){
         User all = userService.findAll();
         return Result.success(all);
     }
@@ -78,5 +84,25 @@ public class UserController {
     public Result<List<User>> getUser(){
         List<User> list = userService.list();
         return Result.success(list);
+    }
+
+    /**
+     * 更新密码
+     *
+     * @param username    用户名
+     * @param oldPassword 旧密码
+     * @param checkPassword 确认密码
+     * @return {@link Result}<{@link ?}>
+     */
+    @RequiresAuthentication
+    @PostMapping("/updatePassword")
+    public Result<?> updatePassword(String username,String oldPassword,String checkPassword){
+        int i = userService.updatePassword(username, oldPassword, checkPassword);
+        if (i != 0){
+            return Result.success("success");
+        }else {
+            return Result.success("fail");
+        }
+
     }
 }

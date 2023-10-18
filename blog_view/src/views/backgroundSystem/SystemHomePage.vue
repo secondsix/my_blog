@@ -8,11 +8,13 @@
         <el-menu
             :unique-opened="true"
             :router="true"
-            background-color="#fff"
-            text-color="#111"
-            active-text-color="#206dfc"
-            :default-openeds="defaultOpeneds"
+            class="el-menu-vertical-demo"
+            :default-active="activeIndex"
+
         >
+<!--      background-color="#fff"
+            text-color="#111"
+            active-text-color="#206dfc"  :default-openeds="defaultOpeneds"  -->
           <!--  index唯一标识  -->
           <el-submenu :index="''+item1.order" v-for="(item1,index) in menuData" :key="item1.path">
             <!--   表示可以展开的一组   -->
@@ -133,8 +135,13 @@ export default {
       style: {
         display: 'block',
       },
-      defaultOpeneds: ['1']
+      defaultOpeneds: ['1'],
+      // 根据当前路由设置默认值     根据需求使用path或者name
+      activeIndex: this.$route.path
     }
+  },
+  created() {
+
   },
   methods: {
     handleClose(key, keyPath) {
@@ -144,9 +151,16 @@ export default {
 
     },
     clickMenuItem() {
-      this.reload();
+
     }
-  }
+  },
+  // 通过监听器解决  导航菜单在页面刷新时会回到默认项
+  watch: {
+    '$route' (to, from) {
+      // 监听路由的变化  如果路由发生改变则当前tab栏默认值也相应改变
+      this.activeIndex = to.path;
+    }
+  },
 }
 </script>
 
@@ -174,6 +188,13 @@ export default {
 
 /deep/ .el-submenu__title{
   text-align: left;
+}
+
+/*
+ 激活的菜单项背景颜色
+*/
+.el-menu-item.is-active{
+  background-color: #e6f7ff !important;
 }
 
 </style>

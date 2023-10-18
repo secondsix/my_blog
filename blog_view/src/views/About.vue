@@ -5,11 +5,11 @@
         <h2>{{ blog.title }}</h2>
       </div>-->
 
-      <el-link v-if="ownBlog" icon="el-icon-edit">
+<!--      <el-link v-if="ownBlog" icon="el-icon-edit">
         <router-link :to="{name: 'BlogEdit',params: {blogId: blog.id}}">
           编辑
         </router-link>
-      </el-link>
+      </el-link>-->
 <!--      <el-divider></el-divider>-->
       <div class="markdown-body" v-html="blog.content"></div>
     </div>

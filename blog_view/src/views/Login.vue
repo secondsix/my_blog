@@ -61,27 +61,17 @@ export default {
       alert("test");
     },
     submitForm(formName) {
-      console.log(formName);
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert("submit!");
           //获取整个vue的this
           const _this = this;
-          // console.log("校验成功");
-          // console.log(_this.ruleForm);
           _this.axios.post("/login", _this.ruleForm).then((res) => {
-            // console.log("================");
-            // console.log(res.data.data);
-
             const jwt = res.headers['authorization'];
             const userInfo = res.data.data;
             //存储（共享）全局变量jwt和userInfo
             _this.$store.commit("SET_TOKEN", jwt);
             _this.$store.commit("SET_USERINFO", userInfo);
-
-            _this.$router.push('/systemHomePage')
-            // console.log(_this.$store.getters.getToken);
-            // console.log(_this.$store.getters.getUser);
+            _this.$router.push('/writeBlog')
           }).catch((error) => {
             console.log(error);
           });

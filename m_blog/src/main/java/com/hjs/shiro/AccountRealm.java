@@ -18,13 +18,23 @@ public class AccountRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
-    //为了让realm支持jwt的凭证校验
+    /**
+     * 为了让realm支持jwt的凭证校验
+     *
+     * @param token 令牌
+     * @return boolean
+     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JwtToken;
     }
 
-    //权限校验
+    /**
+     * 权限校验
+     *
+     * @param principalCollection 主要收集
+     * @return {@link AuthorizationInfo}
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;

@@ -150,7 +150,7 @@ export default {
       this.getTagDataSource();
     },
     addTagClose(){
-
+      this.$refs['addFormRef'].resetFields();
     },
     saveType(){
       this.axios.post('/tag/tagSave',this.tagForm,{

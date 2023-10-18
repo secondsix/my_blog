@@ -101,13 +101,13 @@ public class BlogController {
         List<Tag> tagList = tagService.list();
 
         for (int i = 0; i < typeList.size(); i++) {
-            if (blog.getTypeId() == typeList.get(i).getId()) {
+            if (blog.getTypeId().equals(typeList.get(i).getId())) {
                 blog.setTypeName(typeList.get(i).getTypeName());
             }
         }
 
         for (int i = 0; i < tagList.size(); i++) {
-            if (blog.getTagId() == tagList.get(i).getId()) {
+            if (blog.getTagId().equals(tagList.get(i).getId())) {
                 blog.setTagName(tagList.get(i).getTag());
             }
         }
@@ -241,8 +241,6 @@ public class BlogController {
         //获取所有用户
         List<User> userList = userService.list(new QueryWrapper<User>().select());
 
-//        System.out.println("blogList = " + blogList);
-
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         if (status != null) {
             queryWrapper.eq("status", status)
@@ -251,28 +249,25 @@ public class BlogController {
             queryWrapper.orderByDesc("created");
         }
 
-
-//        System.out.println("status = " + status);
-
         Page<Blog> page = new Page<>(pageNo, pageSize);
         IPage<Blog> blogIPage = blogService.page(page, queryWrapper);
         for (int i = 0; i < blogIPage.getRecords().size(); i++) {
             //设置分类名称
             for (int j = 0; j < typeList.size(); j++) {
-                if (blogIPage.getRecords().get(i).getTypeId() == typeList.get(j).getId()) {
+                if (blogIPage.getRecords().get(i).getTypeId().equals(typeList.get(j).getId())) {
                     blogIPage.getRecords().get(i).setTypeName(typeList.get(j).getTypeName());
                 }
             }
 
             //设置标签名称
             for (int j = 0; j < tagList.size(); j++) {
-                if (blogIPage.getRecords().get(i).getTagId() == tagList.get(j).getId()) {
+                if (blogIPage.getRecords().get(i).getTagId().equals(tagList.get(j).getId())) {
                     blogIPage.getRecords().get(i).setTagName(tagList.get(j).getTag());
                 }
             }
             //设置用户名
             for (int j = 0; j < userList.size(); j++) {
-                if (blogIPage.getRecords().get(i).getUserId() == userList.get(j).getId()) {
+                if (blogIPage.getRecords().get(i).getUserId().equals(userList.get(j).getId())) {
                     blogIPage.getRecords().get(i).setUsername(userList.get(j).getUsername());
                 }
             }
@@ -421,20 +416,22 @@ public class BlogController {
     @PostMapping("/deleteDImg")
     public Result<?> deleteImg(String id) throws Exception {
         Blog blog = blogService.getById(id);
-        String description = blog.getDescription();
-        String content = blog.getContent();
+        if (blog.getDescription() != null){
+            String description = blog.getDescription();
+            String content = blog.getContent();
 
-        if (description.contains("/group1/M00/00/00/")){
-            List<String> stringLists = stringList(description);
-            for (String i: stringLists) {
-                FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+            if (description.contains("/group1/M00/00/00/")){
+                List<String> stringLists = stringList(description);
+                for (String i: stringLists) {
+                    FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+                }
             }
-        }
 
-        if (content.contains("/group1/M00/00/00/")){
-            List<String> stringList = stringList(content);
-            for (String i: stringList) {
-                FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+            if (content.contains("/group1/M00/00/00/")){
+                List<String> stringList = stringList(content);
+                for (String i: stringList) {
+                    FastDFSClient.deleteFile("group1", "M00/00/00/" + i);
+                }
             }
         }
 

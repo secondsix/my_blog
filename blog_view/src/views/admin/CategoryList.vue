@@ -152,7 +152,7 @@ export default {
       this.getDataSource();
     },
     addDialogClose() {
-
+      this.$refs['addFormRef'].resetFields();
     },
     saveType() {
       this.axios.post('/type/save', this.addForm, {
@@ -160,7 +160,7 @@ export default {
           "Authorization": localStorage.getItem("token")
         }
       }).then(res => {
-        // console.log(res.data.data);
+
         if (res.data.data === "success") {
           this.$message({
             message: '操作成功!',

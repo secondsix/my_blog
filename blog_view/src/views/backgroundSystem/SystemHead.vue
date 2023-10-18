@@ -10,7 +10,7 @@
         active-text-color="#ffd04b"
     >
       <div style="float: left;margin-left: 20px;clear:left; ">
-        <img class="mlogo" src="../../assets/logo.jpg" alt="logo图片"/>
+        <img class="mlogo" src="../../assets/logo.jpg" alt="logo图片" @click="skipIndex"/>
       </div>
 <!--      <span style="color: #ffffff;font-size: 24px;margin: 5px auto">Arthur的个人博客</span>-->
       <div style="float: right;clear: right; ">
@@ -23,25 +23,37 @@
           </template>
           <el-menu-item index="1-1">个人中心</el-menu-item>
           <el-menu-item index="1-2">账户设置</el-menu-item>
-          <el-menu-item index="1-3">密码修改</el-menu-item>
+          <el-menu-item index="1-3" @click="openUpdatePassword">密码修改</el-menu-item>
         </el-submenu>
         <el-menu-item index="2" style="float: right"><a @click="logout">注销</a></el-menu-item>
       </div>
 
     </el-menu>
+
+    <el-dialog title="密码修改" :visible.sync="dialogFormVisible" width="450px" class="abow_dialog"
+               @close="updatePasswordClose">
+      <UpdatePassword ref="updatePasswordClose"/>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
+import UpdatePassword from "@/views/admin/UpdatePassword";
+
 export default {
   name: "SystemHead",
+  components: {
+    UpdatePassword
+  },
   data() {
     return {
       user: {
         username: '',
         avatar: ''
       },
-      activeIndex2: '1'
+      activeIndex2: '1',
+      dialogFormVisible: false
     }
   },
   created() {
@@ -70,6 +82,19 @@ export default {
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    // 跳转主页
+    skipIndex(){
+      this.$router.push('/');
+    },
+    openUpdatePassword(){
+      this.dialogFormVisible = true;
+    },
+    updatePasswordClose(){
+      this.dialogFormVisible = false;
+      this.$nextTick(()=>{
+        this.$refs.updatePasswordClose.updatePasswordClose();
+      })
     }
   }
 }
@@ -81,6 +106,8 @@ export default {
   margin-top: 7px;
   width: 40px;
   height: 40px;
+  cursor:pointer;
+
 }
 
 .headerRightAvatar {
@@ -96,4 +123,9 @@ span.headerRight {
 /deep/ .el-menu.el-menu--horizontal {
   border-bottom: 0;
 }
+
+.abow_dialog {
+  width: calc(100% - 70px);
+}
+
 </style>

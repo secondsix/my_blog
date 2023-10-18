@@ -431,12 +431,8 @@ export default {
       this.dialogVisible = true;
     },
     getName(file) {
-      // console.log(file);
       this.file = file;
-      // this.beforeAvatarUpload(file);
-      // console.log("------------------------")
       let show = this.beforeAvatarUpload(file);
-      // console.log(file);
       if (show) {
         // 判断show是否为true
         this.fileShow = true;
@@ -444,7 +440,6 @@ export default {
         this.fileShow = false;
         this.getRemoveFile();
       }
-      // console.log(this.fileShow);
     },
     upload(file) {
       let fd = new FormData;
@@ -463,8 +458,6 @@ export default {
 
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG及PNG 格式!');
-        // console.log(file);
-        // console.log(this.fileShow);
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
@@ -472,14 +465,9 @@ export default {
       return isJPG && isLt2M;
     },
     getRemoveFile(file, fileList) {
-      // console.log(this.file.raw);
-      // console.log(this.ruleForm.firstPicture);
       this.$refs.upload.clearFiles();//调用element官方的方法
-      // this.ruleForm.firstPicture = '';
       this.file = {};
       this.uploadStatus = false;
-      // console.log(file);
-      // console.log(fileList);
     },
     imgAdd(pos,file){
       let imgData = new FormData;

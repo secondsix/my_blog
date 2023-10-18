@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 帐户控制器
+ *
+ * @author hjs
+ * @date 2023/02/23
+ */
 @RestController
 public class AccountController {
     @Autowired
@@ -28,14 +34,12 @@ public class AccountController {
     JwtUtils jwtUtils;
 
     @RequestMapping("/login")
-    public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response){
+    public Result<?> login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response){
         User user = userService.getOne(new QueryWrapper<User>().eq("username", loginDto.getUsername()));
-        Assert.notNull(user,"用户不存在");//断言拦截
+        // 断言拦截
+        Assert.notNull(user,"用户不存在");
 
-//        System.out.println("loginDto = " + SecureUtil.md5(loginDto.getPassword()));
-//        System.out.println("user.getPassword() = " + user.getPassword());
-
-        //判断账号密码是否错误，因为是md5加密所以这里md5判断
+        // 判断账号密码是否错误，因为是md5加密所以这里md5判断
         if (!user.getPassword().equals(SecureUtil.md5(loginDto.getPassword()))){
             //密码不同则抛出异常
             return Result.fail("密码不正确");
@@ -54,10 +58,15 @@ public class AccountController {
         );
     }
 
-    //需要认证权限才能退出登陆
+    /**
+     * 注销
+     * 需要认证权限才能退出登陆
+     *
+     * @return {@link Result}<{@link ?}>
+     */
     @RequiresAuthentication
     @RequestMapping("/logout")
-    public Result logout(){
+    public Result<?> logout(){
         //退出登陆
         SecurityUtils.getSubject().logout();
         return Result.success("注销成功!");
